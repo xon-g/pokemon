@@ -28,20 +28,26 @@ class PokemonSpecies(models.Model):
         ]
     ) 
     next_evolution = models.ForeignKey('self', blank=True, null=True, on_delete=SET_NULL)
-    pokemon_type = models.ForeignKey(PokemonTypes, verbose_name="Type(s)", default=1, on_delete=SET_DEFAULT)
+    poke_type = models.ManyToManyField(PokemonTypes, verbose_name="Pokemon Type(s)")
 
     def __str__(self):
         return self.name
+    
+    def pokemon_type(self):
+        type1_id = self.poke_type.first()
+        type2_id = self.poke_type.last()
+        # return type_
+        if type1_id == type2_id:
+            return type1_id
+        else:
+            return f'{type1_id} {type2_id}'
 
     class Meta:
         verbose_name_plural = "Pokemon Species"
 
-
 class Pokemons(models.Model):
     nickname = models.CharField(max_length=20)
-    species = models.ForeignKey(PokemonSpecies, verbose_name="Pokemon Species", null=True, on_delete=SET_NULL)
-    class Meta:
-        verbose_name_plural = "Pokemons"
+    species = models.ForeignKey(PokemonSpecies, verbose_name="Pokemon Species", null=True, on_delete=models.SET_NULL)
     level = models.PositiveIntegerField(
         default=5,
         validators=[
@@ -54,10 +60,17 @@ class Pokemons(models.Model):
                 message="Please enter up to 100. Leave blank if not applicable."
             )
         ]
-    )
-        
-    pokemon_type = 'hello'
+    )    
     trainer = models.CharField(max_length=20, null=True)
+
+    # def pokemon_type(self):
+    #     poke_name = self.species
+    #     poke_id = poke_name.id
+    #     poke_type = PokemonTypes.objects.all()
+    #     return poke_type
+
+    class Meta:
+        verbose_name_plural = "Pokemons"
 
     def __str__(self):
         return self.nickname

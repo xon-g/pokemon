@@ -10,10 +10,12 @@ class PokemonSpeciesAdmin(admin.ModelAdmin):
         'evolution_level', 'next_evolution', 
     )
 
+
+
 class PokemonsAdmin(admin.ModelAdmin):
     list_display = (
-        'nickname', 'species',
-        'pokemon_type', 'level', 'trainer'
+        'nickname', 'species', # 'pokemon_type',
+        'level', 'trainer'
     )
 
 admin.site.register(PokemonSpecies, PokemonSpeciesAdmin)
