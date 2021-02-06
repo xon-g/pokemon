@@ -14,7 +14,7 @@ class PokemonSpeciesAdmin(admin.ModelAdmin):
 
 class PokemonsAdmin(admin.ModelAdmin):
     list_display = (
-        'nickname', 'species', # 'pokemon_type',
+        'nickname', 'species', 'pokemon_type',
         'level', 'trainer'
     )
 

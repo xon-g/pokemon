@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models.deletion import CASCADE, PROTECT, SET_DEFAULT, SET_NULL
+from django.db.models.fields.related import ForeignKey, ForeignObject
 
 
 # Create your models here.
@@ -69,6 +70,8 @@ class Pokemons(models.Model):
     #     poke_type = PokemonTypes.objects.all()
     #     return poke_type
 
+    def pokemon_type(self):
+        return PokemonSpecies.objects.get(name=self.species).pokemon_type()
     class Meta:
         verbose_name_plural = "Pokemons"
 
